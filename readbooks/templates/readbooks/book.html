@@ -1,0 +1,33 @@
+{% extends "readbooks/base.html" %}
+
+{% block title %}
+    Book
+{% endblock %}
+
+{% block body %}
+    <h1>Book Details</h1>
+
+    <ul>
+        <li>Title: {{ book.title }}</li>
+        <li>ISBN: {{ book.isbn }}</li>
+        <li>AUTHOR: {{ book.author}}</li>
+        <li>YEAR: {{ book.year}}</li>
+        <li>AVERAGE RATING: {{ avg_rat }}</li>
+        <li>USER: {{ user }}</li>
+    </ul>
+
+    <div class = "create-review">
+    	<h2>write a review</h2>
+    	<form class="site-form" action="{% url 'Create_Review' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group" hidden>
+            <select class="form-control" name="Bookid">
+                    <option value="{{ book.id }}">{{ book.id }}</option>
+            </select>
+        </div>
+    		{{form}}
+    		<input type = "submit" value ="Submit review">
+        <form>		
+    </div>	
+
+{% endblock %}

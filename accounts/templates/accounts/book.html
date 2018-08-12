@@ -1,0 +1,17 @@
+{% extends "readbooks/base.html" %}
+
+{% block title %}
+    Book
+{% endblock %}
+
+{% block body %}
+    <h1>Flight Details</h1>
+
+    <ul>
+        <li>Title: {{ book.title }}</li>
+        <li>ISBN: {{ book.isbn }}</li>
+        <li>AUTHOR: {{ book.author}}</li>
+        <li>YEAR: {{ book.year}}</li>
+    </ul>
+
+{% endblock %}
