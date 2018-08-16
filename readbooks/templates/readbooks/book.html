@@ -6,7 +6,13 @@
 
 {% block body %}
     <h1>Book Details</h1>
-    <ul>
+ <div class="container">
+   <div class="row"> 
+    <div class="col-sm-6">
+        <h1><img src="http://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg" /></h1>
+    </div>    
+    <div class="col-sm-6">
+    <ul style = "font-size: 30px">
         <li>Title: {{ book.title }}</li>
         <li>ISBN: {{ book.isbn }}</li>
         <li>AUTHOR: {{ book.author}}</li>
@@ -14,18 +20,47 @@
         <li>AVERAGE RATING: {{ avg_rat }}</li>
         <li>USER: {{ user }}</li>
     </ul>
-   <div class="container" style="background:skyblue">
+   </div>
+   </div> 
+ </div>
+ <br>
+ <div class="container">
+  <h2>Dynamic Tabs</h2>
+  <p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Critical Review</a></li>
+    <li><a data-toggle="tab" href="#menu1">User Reviews</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h3>Critical Review</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>User Reviews</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+  </div>
+</div>
+<br>
+   <div class="container">
     <div class = "form-group">
     	<h2>write a review</h2>
-    	<form class="form-inline" action="{% url 'Create_Review' %}" method="POST">
+    	<form class="site-form" action="{% url 'Create_Review' %}" method="POST">
             {% csrf_token %}
             <div class="form-group" hidden>
-            <select class="form-control" name="Bookid">
+                <select class="form-control" name="Bookid">
                     <option value="{{ book.id }}">{{ book.id }}</option>
-            </select>
-        </div>
+                 </select>
+            </div>
     		{{form}}
-    		<input type = "submit" value ="Submit review">
+            <br>
+    		<input class="btn btn-primary" type = "submit" value ="Submit review">
         </form>		
     </div>
    </div>  	

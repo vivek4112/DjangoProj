@@ -21,10 +21,6 @@ def book(request):
 
         key = "5JCTgW3KWZrZ302j2ouhQ"
 
-        
-        
-        
-        
         if search_key == "isbn":
             if books.objects.filter(isbn=name).count() == 0:
                 return render(request, "readbooks/error.html",err_msg)
