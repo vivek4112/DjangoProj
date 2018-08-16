@@ -2,7 +2,7 @@ import requests
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render,redirect
 from django.urls import reverse
-from .models import books
+from .models import books, Review
 from django.contrib.auth.models import User
 from .import forms
 
@@ -52,7 +52,7 @@ def book(request):
                 data = data["books"]
                 avg_rat = data[0]['average_rating']
                 if res.status_code != 200: 
-                   return render(request, "readbooks/error.html",err_msg)
+                   return render(request, "readbooks/error.html",err_msg)                 
         else:
             return render(request, "readbooks/error.html",err_msg)             
                       
@@ -78,6 +78,8 @@ def Create_Review(request):
                 instance.userid=request.user
                 b_id = request.POST["Bookid"]
                 book = books.objects.get(id__exact=b_id)
+                if Review.objects.filter(bookid=b_id, userid=request.user.id).count() != 0:
+                    return render(request, "readbooks/error.html",{"message" : 'You have submited the review for this book already!'}) 
                 instance.bookid=book
                 instance.save()
                 return redirect('/readbooks/index')
