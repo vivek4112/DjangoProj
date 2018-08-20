@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth import login,logout
 
-# Create your views here.
+# Creating a signup method
 def signup_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -17,6 +17,7 @@ def signup_view(request):
 
     return render(request, "accounts/signup.html", {'form':form})
 
+# Creating a login method
 def login_view(request):
     if request.method == 'POST':
        	form = AuthenticationForm(data=request.POST)
@@ -29,6 +30,7 @@ def login_view(request):
 
     return render(request,'accounts/login.html',{'form':form})
 
+# Creating a login method
 def logout_view(request):
        err_msg = {
            "message" : 'You are logged out!'

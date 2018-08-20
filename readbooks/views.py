@@ -12,17 +12,21 @@ def index(request):
     return render(request, "readbooks/index.html")
 
 def book(request):
-    
-        name = request.POST["name"]
-        search_key = request.POST["search_key"]
+        
+        name = request.POST["name"] # getting the ISBN/Title of the book to be searched
+        search_key = request.POST["search_key"] # getting the type(ISBN/Title) of the search
+
+        # Defining an error message
         err_msg = {
            "message" : 'Book not Found!'
         }
 
-        key = "5JCTgW3KWZrZ302j2ouhQ"
+        # Keys to make API calls to fetch book details, cover and critical reviews
+
+        key = "5JCTgW3KWZrZ302j2ouhQ"  
         key2 = "9082ca37e18f3da7ce630243313c9c14b06e6b91"
 
-        if search_key == "isbn":
+        if search_key == "isbn":  #searching based on isbn
             if books.objects.filter(isbn=name).count() == 0:
                 return render(request, "readbooks/error.html",err_msg)
             else:
@@ -46,7 +50,7 @@ def book(request):
                 avg_rat = data[0]['average_rating']
                 if res.status_code != 200: 
                    return render(request, "readbooks/error.html",err_msg)
-        elif search_key == "title":
+        elif search_key == "title": #searching based on title
             if books.objects.filter(title=name).count() == 0:
                 return render(request, "readbooks/error.html",err_msg)
             else:
@@ -77,6 +81,7 @@ def book(request):
         
         user = request.user.id
         form = forms.CreateReview()
+        # Creating the context for rendering
         context = {
             "book": book,
             "avg_rat": avg_rat,
@@ -88,11 +93,12 @@ def book(request):
     
         return render(request, "readbooks/book.html",context)
 
+# method to create and submit the Reviews by Customers
 def Create_Review(request):
     if request.method == 'POST':
-        user_id = request.user.id
-        if User.objects.filter(id=user_id).count() != 0:
-            form = forms.CreateReview(request.POST)
+        user_id = request.user.id    # getting the user id of the logged-in/Authenticated user
+        if User.objects.filter(id=user_id).count() != 0: 
+            form = forms.CreateReview(request.POST) # creating review form using Create review class defined in forms.py
             if form.is_valid():
                 instance = form.save(commit=False)
                 instance.userid=request.user
@@ -101,8 +107,8 @@ def Create_Review(request):
                 if Review.objects.filter(bookid=b_id, userid=request.user.id).count() != 0:
                     return render(request, "readbooks/error.html",{"message" : 'You have submited the review for this book already!'}) 
                 instance.bookid=book
-                instance.save()
-                return redirect('/readbooks/index')
+                instance.save()    # Saving the review instance to database.
+                return redirect('/')
         else:
             return render(request, "readbooks/error.html",{"message" : 'Please login or Register to submit a review!'})        
            
