@@ -2,10 +2,13 @@
 
 {% block body %}
 <h1>Signup</h1>
-<form class="site-form" action="/accounts/signup/" method="post">
-	{% csrf_token %}
-    {{form}}
-    <input type="submit" value="signup" />
-</form>
-
+<div class="container">
+  <div class = "form-group">
+	<form class="site-form" action="/accounts/signup/" method="post">
+		{% csrf_token %}
+	    {{form}}
+	    <input class="btn btn-primary" type="submit" value="signup" />
+	</form>
+   </div>	
+</div>
 {% endblock %}

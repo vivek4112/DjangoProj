@@ -11,7 +11,7 @@ def signup_view(request):
         if form.is_valid():
             user = form.save()
             login(request,user)
-            return redirect('/readbooks/index')
+            return redirect('/')
     else:	         
         form = 	UserCreationForm()
 
@@ -23,12 +23,15 @@ def login_view(request):
        	if form.is_valid():
        	   user = form.get_user()
        	   login(request,user)	
-           return redirect('/readbooks/index')   		
+           return redirect('/')   		
     else:
         form = AuthenticationForm()
 
     return render(request,'accounts/login.html',{'form':form})
 
 def logout_view(request):
+       err_msg = {
+           "message" : 'You are logged out!'
+        }
        logout(request)
-       return redirect('/readbooks/index')	   	 	 	
+       return render(request, "readbooks/error.html",err_msg)  	   	 	 	
